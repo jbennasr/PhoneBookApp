@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PhoneBookConsole
 {
@@ -17,7 +19,7 @@ namespace PhoneBookConsole
         {
            var contacts = Contact.GetAllContacts();
 
-            Contact contact = new Contact() { ContactID = contacts.Count + 1, Name = name, Mobil = mobile, Email = email };
+            Contact contact = new Contact() {ContactID = contacts.Count + 1, Name = name, Mobil = mobile, Email = email };
             contacts.Add(contact);
             return contact;
 
@@ -25,14 +27,18 @@ namespace PhoneBookConsole
 
         public static List<Contact> GetAllContacts()
         {
-            List<Contact> contacts = new List<Contact>()
+
+            using (StreamReader data =File.OpenText(@"../../ListOfContact.json"))
             {
-                new Contact() { ContactID = 1, Name = "Ali Ben Ali", Mobil = "53565765", Email = "ali@gmail.com" },
-                new Contact() { ContactID = 2, Name = "maram tatoui", Mobil = "222222222", Email = "maram@gmail.com" },
-                new Contact() { ContactID = 3, Name = "Foued ben rabeh ", Mobil = "111111111", Email = "foued@gmail.com" },
-                new Contact() { ContactID = 4, Name = "marouen mbarki", Mobil = "444444444", Email = "maouren@gmail.com" }
-            };
-            return contacts;
+
+                var stringListOfContact = data.ReadToEnd();
+
+                var ObjectsJsonList = JsonConvert.DeserializeObject<List<Contact>>(stringListOfContact);
+
+                return ObjectsJsonList.OrderBy(c => c.Name).ToList();
+            }
+            
+
 
         }
     }
