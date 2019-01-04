@@ -21,6 +21,11 @@ namespace PhoneBookConsole
 
             Contact contact = new Contact() {ContactID = contacts.Count + 1, Name = name, Mobil = mobile, Email = email };
             contacts.Add(contact);
+            using (StreamWriter file = new StreamWriter(@"../../ListOfContact.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, contacts);
+            }
             return contact;
 
         }

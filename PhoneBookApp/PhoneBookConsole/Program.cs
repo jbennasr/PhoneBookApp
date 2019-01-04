@@ -13,22 +13,14 @@ namespace PhoneBookConsole
         
         static void Main(string[] args)
         {
-            var contacts = Contact.GetAllContacts();
-
-            //using (StreamWriter file = new StreamWriter(@"../../ListOfContact.json"))
-            //{
-            //    JsonSerializer serializer = new JsonSerializer();
-            //    serializer.Serialize(file,contacts);
-            //}
-            
-           // var newcContact = Contact.AddContact("Fathi ben rabah", "666666666", "fathi@gmail.com");
-
            
-
+            var contacts = Contact.GetAllContacts();
+            
             foreach (var contact in contacts)
             {
-                Console.WriteLine($"{contact.ContactID} {contact.Name}");
+                Console.WriteLine($"{contact.Name} {contact.Mobil} {contact.Email}");
             }
+
 
 
             Console.ReadKey();
