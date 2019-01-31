@@ -36,35 +36,16 @@ namespace PhoneBookConcole
             }
         }
 
-        //public static void CreateContact(string name, string mobile, string email)
-        //{
-
-        //    if (Services.IsDublicated(name) == true)
-        //    {
-        //        Console.WriteLine($"The Contact {name} exist you want to update it ?" +
-        //                          $"Please press (Y/N)");
-        //        var request = Console.ReadLine().ToUpper();
-        //        if (request == "Y")
-        //            UpdateContact(name, mobile, email);
-               
-        //        if (request == "N")
-        //            CreateNewContact(name, mobile, email);
-               
-
-
-
-        //    }
-
-
-        //}
+        
         public static Contact CreateNewContact(string name, string mobile, string email)
         {
             var listContact = GetContacts();
             Contact newContact = new Contact()
             {
-               // ContactID = Services.FindLastId() + 1,
+              
                 ContactID = listContact.Max(c => c.ContactID) +1,
                 Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower()),
+                
                 Mobile = mobile,
                 Email = email
 
@@ -106,15 +87,13 @@ namespace PhoneBookConcole
 
             Console.WriteLine($"Contact Updated : {UpdatedContact.ToString()}");
             return UpdatedContact;
-
-
         }
 
         public static void RemoveContact(string name)
         {
-
+          var _name =  CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
             var ListContact = GetContacts();
-            var removedContact = Enumerable.FirstOrDefault<Contact>(ListContact, c => c.Name == name);
+            var removedContact = Enumerable.FirstOrDefault<Contact>(ListContact, c => c.Name == _name);
             Console.WriteLine($"You are sure to delete {removedContact.Name} if yes please press (Y/N)");
             var request = Console.ReadLine().ToUpper();
             if (Services.IsDublicated(name) == true || request == "Y")
@@ -125,11 +104,11 @@ namespace PhoneBookConcole
                     ListContact.Remove(removedContact);
                     serializer.Serialize(file, ListContact);
                 }
-                Console.WriteLine($"Contact Updated : {removedContact.ToString()}");
+                Console.WriteLine($"Contact Removed : {removedContact.ToString()}");
             }
             else
             {
-                Console.WriteLine($"The Conatact {name} doesn't exist ");
+                Console.WriteLine($"The Contact {name} doesn't exist ");
             }
 
         }

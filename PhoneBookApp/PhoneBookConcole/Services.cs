@@ -25,9 +25,6 @@ namespace PhoneBookConcole
             }
             return false;
         }
-
-       
-
         public static List<Contact> FindContact(string name)
         {
             var _name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
@@ -40,6 +37,7 @@ namespace PhoneBookConcole
                     listFounded.Add(contact);
                 }
             }
+
             Console.WriteLine($"{listFounded.Count} Contacts found");
             foreach (var c in listFounded)
             {
